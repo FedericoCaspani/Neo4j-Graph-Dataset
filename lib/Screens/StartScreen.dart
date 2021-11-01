@@ -26,8 +26,9 @@ class _StartScreenState extends State<StartScreen> {
     return FutureBuilder(
         future: _barCodeStorage.getBarCode(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.data != '') {
-            return MainLayout();
+          if (snapshot.data != '-1') {
+            // TODO just for the test
+            return BarCodeScreen();
           }
           return BarCodeScreen();
         }

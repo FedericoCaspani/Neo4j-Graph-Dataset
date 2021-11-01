@@ -13,7 +13,7 @@ class BarCodeScreen extends StatefulWidget {
 
 class _BarCodeScreenState extends State<BarCodeScreen> {
 
-  String? scanResult;
+  String? scanResult = "A";
   BarCodeStorage _barCodeStorage = new BarCodeStorage();
 
   @override
@@ -29,6 +29,10 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              "$scanResult",
+            ) ,
+            SizedBox(height: 28,),
             ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
@@ -57,7 +61,7 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
 
       setState(() => this.scanResult = scanResult);
 
-      _barCodeStorage.setBarCode(scanResult);
+      /*_barCodeStorage.setBarCode(scanResult);
 
       String barCode = await _barCodeStorage.getBarCode();
 
@@ -67,7 +71,7 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
             context,
             MaterialPageRoute(builder: (context) => MainLayout())
         );
-      }
+      }*/
 
     } on PlatformException {
       this.scanResult = "Failed to get platform version";
