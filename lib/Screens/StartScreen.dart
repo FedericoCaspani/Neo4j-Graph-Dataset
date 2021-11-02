@@ -4,7 +4,6 @@ import 'package:covid_free_app/Screens/MaynLayout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 /*
 * Decide which screen to run either with taxCode
 * or without it
@@ -28,7 +27,7 @@ class _StartScreenState extends State<StartScreen> {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.data != '-1') {
             // TODO just for the test
-            return BarCodeScreen();
+            return MainLayout();
           }
           return BarCodeScreen();
         }

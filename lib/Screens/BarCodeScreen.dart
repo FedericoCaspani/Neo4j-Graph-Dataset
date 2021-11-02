@@ -13,7 +13,7 @@ class BarCodeScreen extends StatefulWidget {
 
 class _BarCodeScreenState extends State<BarCodeScreen> {
 
-  String? scanResult = "A";
+  String? scanResult;
   BarCodeStorage _barCodeStorage = new BarCodeStorage();
 
   @override
@@ -21,7 +21,6 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
     Size size = MediaQuery
         .of(context)
         .size;
-
     return Scaffold(
       body: Container(
         height: size.height,
@@ -29,18 +28,15 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "$scanResult",
-            ) ,
-            SizedBox(height: 28,),
-            ElevatedButton.icon(
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
-                    onPrimary: Colors.black
+                    onPrimary: Colors.black,
+                    textStyle: const TextStyle(fontSize: 30),
+                    fixedSize: Size(size.height, size.width)
                 ),
                 onPressed: scanBarCode,
-                icon: Icon(Icons.camera_alt_outlined),
-                label: Text('Start scan')
+                child: const Text('Press here to start scan your tax code!')
             )
           ],
         ),
@@ -61,21 +57,41 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
 
       setState(() => this.scanResult = scanResult);
 
-      /*_barCodeStorage.setBarCode(scanResult);
+      _barCodeStorage.setBarCode(scanResult);
 
       String barCode = await _barCodeStorage.getBarCode();
 
-      // TODO: do the greetings
-      if (barCode != '') {
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainLayout())
+      if (barCode != '-1') {
+        showDialog(
+            context: context,
+            builder: (context) => _buildPopupDialog(context),
         );
-      }*/
-
+      }
     } on PlatformException {
       this.scanResult = "Failed to get platform version";
     }
 
   }
+
+  Widget _buildPopupDialog(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('Everything is fine! You could proceed'),
+      content: new Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      actions: <Widget>[
+        new TextButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainLayout())
+            );
+          },
+          child: const Text('OK'),
+        )
+      ],
+    );
+  }
+
 }
