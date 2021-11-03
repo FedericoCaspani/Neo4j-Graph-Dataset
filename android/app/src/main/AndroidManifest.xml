@@ -3,7 +3,12 @@
    <application
         android:label="covid_free_app"
         android:icon="@mipmap/ic_launcher">
-        <activity
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyBOupgrKvCmQn5B3a3Vjn6WgG7FrpNU8f0"/>
+
+
+       <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"

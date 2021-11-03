@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
 import '../../constraints.dart';
+import 'BarCodeAdditionalScreen.dart';
 
 class BarCodeScreen extends StatefulWidget {
   @override
@@ -18,9 +19,7 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         height: size.height,
@@ -33,10 +32,23 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
                     primary: kPrimaryColor,
                     onPrimary: Colors.black,
                     textStyle: const TextStyle(fontSize: 30),
-                    fixedSize: Size(size.height, size.width)
+                    fixedSize: Size(size.height * 3/4, size.width)
                 ),
                 onPressed: scanBarCode,
                 child: const Text('Press here to start scan your tax code!')
+            ),
+            ElevatedButton(
+              child: const Text('Press here, f you cannot scan your tax code'),
+              style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 30),
+                  fixedSize: Size(size.height * 1/4, size.width)
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BarCodeAdditionalScreen())
+                );
+              },
             )
           ],
         ),
@@ -73,25 +85,25 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
 
   }
 
-  Widget _buildPopupDialog(BuildContext context) {
-    return new AlertDialog(
-      title: const Text('Everything is fine! You could proceed'),
-      content: new Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-      ),
-      actions: <Widget>[
-        new TextButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainLayout())
-            );
-          },
-          child: const Text('OK'),
-        )
-      ],
-    );
-  }
+}
 
+Widget _buildPopupDialog(BuildContext context) {
+  return new AlertDialog(
+    title: const Text('Everything is fine! You could proceed'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ),
+    actions: <Widget>[
+      new TextButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainLayout())
+          );
+        },
+        child: const Text('OK'),
+      )
+    ],
+  );
 }
