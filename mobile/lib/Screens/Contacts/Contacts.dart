@@ -1,3 +1,4 @@
+import 'package:covid_free_app/constraints.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class _ContactsState extends State<Contacts> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Contacts"),
+        backgroundColor: kPrimaryColor,
       ),
       body: ListView.separated(
         itemCount: items.length,
@@ -42,6 +44,7 @@ class _ContactsState extends State<Contacts> {
       floatingActionButton: FloatingActionButton(
         onPressed: _addItem,
         child: Icon(Icons.add),
+        backgroundColor: kPrimaryColor,
       ),
     );
   }

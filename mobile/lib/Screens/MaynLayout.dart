@@ -21,15 +21,16 @@ class _MainLayoutState extends State<MainLayout> {
 
   final  _bottomNavigationBar = [
     BottomNavigationBarItem(
-        icon: new Icon(Icons.menu),
-        label: "Menu"
+        icon: new Icon(Icons.contacts),
+        label: "Contacts"
     ),
     BottomNavigationBarItem(
         icon: new Icon(Icons.map),
         label: "Map"
     ),
     BottomNavigationBarItem(
-      icon: new Icon(Icons.receipt_long_rounded)
+      icon: new Icon(Icons.receipt_long_rounded),
+      label: "Health"
     )
   ];
 

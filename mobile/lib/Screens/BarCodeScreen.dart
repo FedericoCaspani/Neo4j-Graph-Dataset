@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../constraints.dart';
 import 'BarCodeAdditionalScreen.dart';
 
@@ -21,27 +22,43 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: kPrimaryLightColor,
       body: Container(
         height: size.height,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ClipOval(
+              child: Image.network(
+                logoBarCode,
+                height: 300.0,
+                width: 300.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 20.0),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     onPrimary: Colors.black,
-                    textStyle: const TextStyle(fontSize: 30),
-                    fixedSize: Size(size.height * 3/4, size.width)
+                    //fixedSize: Size(size.height * 3/4, size.width)
                 ),
                 onPressed: scanBarCode,
-                child: const Text('Press here to start scan your tax code!')
+                child: Text(
+                    'Press here to start scan your tax code!',
+                    style: fontButton,
+                )
             ),
+            SizedBox(height: 20.0),
             ElevatedButton(
-              child: const Text('Press here, f you cannot scan your tax code'),
+              child: Text(
+                  'Press here, if you cannot scan your tax code',
+                  style: fontButton,
+              ),
               style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 30),
-                  fixedSize: Size(size.height * 1/4, size.width)
+                  //textStyle: const TextStyle(fontSize: 30),
+                  //fixedSize: Size(size.height * 1/4, size.width)
               ),
               onPressed: () {
                 Navigator.push(

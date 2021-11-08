@@ -5,7 +5,7 @@ import 'constraints.dart';
 
 void main() {
   runApp(MyApp());
-  SystemChrome.setEnabledSystemUIOverlays([]); // for full screen
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky); // for full screen
 }
 
 class MyApp extends StatelessWidget {
