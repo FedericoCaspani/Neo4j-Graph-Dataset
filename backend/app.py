@@ -5,13 +5,14 @@ from functools import wraps
 
 from dotenv import load_dotenv, find_dotenv
 
-
 from flask import Flask, g, request, abort, request_started
 from flask_cors import CORS
 from flask_json import FlaskJSON, json_response
-from flask_restful_swagger_2 import Api, swagger, Schema
+from flask_restful_swagger_2 import Api
 
 from neo4j import GraphDatabase, basic_auth
+
+import models
 
 """
 The credits are 
@@ -50,9 +51,9 @@ def env(key, default=None, required=True):
         raise RuntimeError("Missing required environment variable '%s'" % key)
 
 
-DATABASE_USERNAME = env('COVID_FREE_DATABASE_USERNAME')
-DATABASE_PASSWORD = env('COVID_FREE_DATABASE_PASSWORD')
-DATABASE_URL = env('COVID_FREE_DATABASE_URL')
+DATABASE_USERNAME = env('neo4j')
+DATABASE_PASSWORD = env('chimneys-october-meaning')
+DATABASE_URL = env('bolt://3.83.161.32:7687')
 
 driver = GraphDatabase.driver(DATABASE_URL, auth=basic_auth(DATABASE_USERNAME, str(DATABASE_PASSWORD)))
 
@@ -104,16 +105,9 @@ request_started.connect(set_user, app)
 
 
 def login_required(f):
-
     @wraps(f)
     def wrapped(*args, **kwargs):
         auth_header = request.headers.get('Authorization')
         if not auth_header:
             return {'message': 'no authorization provided'}, 401
         return f(*args, **kwargs)
-
-
-
-
-
-
