@@ -1,5 +1,6 @@
 import 'package:covid_free_app/Payload/DataManagement/BarCodeStore.dart';
-import 'package:covid_free_app/Screens/MaynLayout.dart';
+import 'package:covid_free_app/Screens/Registration.dart';
+import 'package:covid_free_app/constraints.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,7 @@ class _BarCodeAdditionalScreen extends State<BarCodeAdditionalScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: kPrimaryLightColor,
       body: Container(
         height: size.height,
         width: size.width,
@@ -81,7 +83,7 @@ class _BarCodeAdditionalScreen extends State<BarCodeAdditionalScreen> {
           onPressed: () {
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainLayout())
+                MaterialPageRoute(builder: (context) => Registration())
             );
           },
           child: const Text('OK'),

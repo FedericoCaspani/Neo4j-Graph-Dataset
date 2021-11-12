@@ -1,10 +1,10 @@
 import 'package:covid_free_app/Payload/DataManagement/BarCodeStore.dart';
 import 'package:covid_free_app/Screens/MaynLayout.dart';
+import 'package:covid_free_app/Screens/Registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../constraints.dart';
 import 'BarCodeAdditionalScreen.dart';
 
@@ -38,27 +38,36 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
               ),
             ),
             SizedBox(height: 20.0),
-            ElevatedButton(
+            ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     onPrimary: Colors.black,
-                    //fixedSize: Size(size.height * 3/4, size.width)
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22
+                    )
                 ),
                 onPressed: scanBarCode,
-                child: Text(
+                icon: Icon(Icons.settings_overscan_outlined),
+                label: Text(
                     'Press here to start scan your tax code!',
                     style: fontButton,
                 )
             ),
             SizedBox(height: 20.0),
-            ElevatedButton(
-              child: Text(
+            ElevatedButton.icon(
+              label: Text(
                   'Press here, if you cannot scan your tax code',
                   style: fontButton,
               ),
+              icon: Icon(Icons.input_outlined),
               style: ElevatedButton.styleFrom(
-                  //textStyle: const TextStyle(fontSize: 30),
-                  //fixedSize: Size(size.height * 1/4, size.width)
+                  primary: kPrimaryColor,
+                  onPrimary: Colors.black,
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22
+                  )
               ),
               onPressed: () {
                 Navigator.push(
@@ -116,7 +125,7 @@ Widget _buildPopupDialog(BuildContext context) {
         onPressed: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MainLayout())
+              MaterialPageRoute(builder: (context) => Registration())
           );
         },
         child: const Text('OK'),

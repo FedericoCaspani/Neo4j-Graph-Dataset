@@ -1,14 +1,11 @@
 from flask_restful_swagger_2 import Schema
 
 
-
 # &&&&& MODELS OF THE NODES &&&&&
-
-
 class GreenPassModel(Schema):
     type = 'object'
     properties = {
-        '<id>': {
+        'id': {
             'type': 'string',
         },
         'date1': {
@@ -26,7 +23,7 @@ class GreenPassModel(Schema):
 class PersonModel(Schema):
     type = 'object'
     properties = {
-        '<id>': {
+        'id': {
             'type': 'string',
         },
         'taxCode': {
@@ -37,9 +34,6 @@ class PersonModel(Schema):
         },
         'surname': {
             'type': 'string',
-        },
-        'birth_date': {
-            'type': 'datetime',
         }
     }
 
@@ -47,14 +41,17 @@ class PersonModel(Schema):
 class PlaceModel(Schema):
     type = 'object'
     properties = {
-        '<id>': {
+        'id': {
             'type': 'string',
         },
         'name': {
             'type': 'string',
         },
-        'coordinates': {
-            'type': 'string',
+        'x': {
+            'type': 'number',
+        },
+        'y': {
+            'type': 'number',
         }
     }
 
@@ -62,7 +59,7 @@ class PlaceModel(Schema):
 class InfectionModel(Schema):
     type = 'object'
     properties = {
-        '<id>': {
+        'id': {
             'type': 'string',
         },
         'date_of_infection': {
