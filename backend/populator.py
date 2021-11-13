@@ -1,10 +1,22 @@
-import sys
 from random import randint
 from neo4j import GraphDatabase, basic_auth
 
 from datetime import date
 
 global conn
+
+# GENERATION PARAMETERS
+PEOPLE = 100
+MIN_FAMILIES = 7
+MAX_FAMILIES = 15
+MIN_FAMILY_MEMBERS = 2
+MAX_FAMILY_MEMBERS = 5
+MIN_CONNECTIONS = 40
+MAX_CONNECTIONS = 60
+MIN_GPS = 30
+MAX_GPS = 50
+MIN_INFECTIONS = 10
+MAX_INFECTIONS = 15
 
 
 class Connection:
@@ -33,7 +45,7 @@ class Connection:
 
 def compute_infections(list):
 
-    for i in range(1, randint(10, 15)):
+    for i in range(1, randint(MIN_INFECTIONS, MAX_INFECTIONS)):
         chosen_infected = list.pop(randint(0, len(list)-1))
         date = "datetime('" + str(randint(2019, 2022)) + "-" + str(randint(1, 12)) + "-" + str(randint(1, 28)) + "')"
 
@@ -53,7 +65,7 @@ def compute_gp(list_to_copy):
 
     today = date.today()
 
-    for numGp in range(0, randint(30, 50)):
+    for numGp in range(0, randint(MIN_GPS, MAX_GPS)):
 
         # GreenPass dates can vary of +-2 months (in the two worst cases) from the current date
         y1 = today.year
@@ -83,10 +95,10 @@ def compute_people():
     list = names.split(",")
 
     query = "CREATE "
-    for i in range(0, len(list)-900):
+    for i in range(0, len(list)-(1000-PEOPLE)):
         query += "(a" + str(i) + ":Person{taxCode:'" + str(i + 4) + "', name:'" + list[i].split(' ')[
             0] + "',surname:'" + list[i].split(' ')[1] + "'})"
-        if i < len(list) - 900 - 1:
+        if i < (len(list) - (1000-PEOPLE) - 1):
             query += ', '
 
     print("computing query...")
@@ -100,9 +112,9 @@ def compute_families(list_to_copy):
 
     current_family = []
 
-    for numF in range(1, randint(7, 15)):
+    for numF in range(1, randint(MIN_FAMILIES, MAX_FAMILIES)):
         query = ""
-        numM = randint(2, 5)
+        numM = randint(MIN_FAMILY_MEMBERS, MAX_FAMILY_MEMBERS)
         for i in range(0, numM):
             current_family.append(list.pop(randint(0, len(list) - 1)))
         print("current family: " + str(current_family))
@@ -136,7 +148,7 @@ def compute_places_and_connections(list):
 
     today = date.today()
 
-    for n in range(randint(40, 60)):
+    for n in range(randint(MIN_CONNECTIONS, MAX_CONNECTIONS)):
         p1 = str(randint(min(list), max(list)))
         p2 = str(randint(min(list), max(list)))
 
@@ -178,7 +190,7 @@ if __name__ == '__main__':
 
     # Creation of a list of taxCodes, used to generate people, families, connections, ...
     tax_list = []
-    for i in range(1, 101):
+    for i in range(1, PEOPLE+1):
         tax_list.append(i)
 
     compute_people()
