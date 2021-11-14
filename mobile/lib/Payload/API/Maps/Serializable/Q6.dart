@@ -54,6 +54,6 @@ Future<QSix> mostVisited() async {
     print(e);
   }
   
-  return QSix.fromJson(json.decode('{"count": "0", date:"1970-01-01", "placeName": "Moscow", '
+  return QSix.fromJson(json.decode('{"count": "0", date:"2000-01-01", "placeName": "Moscow", '
       '"persons":[{"name": "name", "surname":"surname", "taxCode":"taxCode"}]}'));
 }

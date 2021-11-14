@@ -39,12 +39,16 @@ class _MainAnalyticsState extends State<MainAnalytics> {
       });
     });
     mostVisited.mostVisited().then((result) {
+      final List<MostVisitedTimeSeries> mostVisited = [];
       double count = result.count.toDouble();
       String placeName = result.placeName;
       DateTime dateTime = DateTime.parse(result.date);
-      mostVisitedTimesSeries.add(MostVisitedTimeSeries(count: count,
+      mostVisited.add(MostVisitedTimeSeries(count: count,
           time: dateTime,
           place: placeName));
+      setState(() {
+        mostVisitedTimesSeries = mostVisited;
+      });
     });
   }
 
