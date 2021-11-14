@@ -34,3 +34,8 @@ Our team has deployed this service with Heroku. To do it you should follow the H
 * ``/api/v0/SetGreen/``is a **C2** command that attaches the green pass to the specified user
 * ``/api/v0/clean/``is a **C3** command that cleans the database keeping only active records
 * ``/api/v0/PersonCreate/``is a out of scope command that registers the user
+
+
+## Populator
+
+Here you could see the populator.py - this is the script that automatically populates the database.
