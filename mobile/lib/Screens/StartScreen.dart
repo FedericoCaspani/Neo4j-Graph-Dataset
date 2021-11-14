@@ -24,10 +24,10 @@ class _StartScreenState extends State<StartScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    /*String request = backend + '/clean';
+    String request = backend + '/clean';
     http.post(Uri.parse(request), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-    });*/
+    });
   }
 
   @override
