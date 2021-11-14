@@ -52,18 +52,13 @@ def env(key, default=None, required=True):
             return default
         raise RuntimeError("Missing required environment variable '%s'" % key)
 
-
-# DATABASE_USERNAME = env('COVID_FREE_DATABASE_USERNAME')
-DATABASE_USERNAME = "neo4j"
-# DATABASE_PASSWORD = env('COVID_FREE_DATABASE_PASSWORD')
-DATABASE_PASSWORD = "blankets-ride-firefighting"
-# DATABASE_URL = env('COVID_FREE_DATABASE_URL')
-DATABASE_URL = "bolt://54.205.87.249:"
+DATABASE_USERNAME = env('COVID_FREE_DATABASE_USERNAME')
+DATABASE_PASSWORD = env('COVID_FREE_DATABASE_PASSWORD')
+DATABASE_URL = env('COVID_FREE_DATABASE_URL')
 
 driver = GraphDatabase.driver(DATABASE_URL, auth=basic_auth(DATABASE_USERNAME, str(DATABASE_PASSWORD)))
 
-# app.config['SECRET_KEY'] = env('SECRET_KEY')
-app.config['SECRET_KEY'] = "very secret key"
+app.config['SECRET_KEY'] = env('SECRET_KEY')
 
 
 def get_db():
