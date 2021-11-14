@@ -9,6 +9,7 @@ const kWhiteColor = Color(0xB3FFFFFF);
 
 // LINKS-
 const logoBarCode = 'https://m.media-amazon.com/images/I/41y7RwDCydL._AC_SX522_.jpg';
+const backend = 'https://smbudproject.herokuapp.com/api/v0';
 
 // FONTS
 final fontButton = GoogleFonts.lato(fontWeight: FontWeight.w100);

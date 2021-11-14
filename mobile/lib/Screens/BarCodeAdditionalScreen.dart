@@ -34,6 +34,15 @@ class _BarCodeAdditionalScreen extends State<BarCodeAdditionalScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            ClipOval(
+              child: Image.network(
+                logoBarCode,
+                height: 200.0,
+                width: 200.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 20.0),
             Text(
               'Please enter your tax code in this field'
             ),
@@ -45,7 +54,28 @@ class _BarCodeAdditionalScreen extends State<BarCodeAdditionalScreen> {
                 labelText: 'Tax code'
               ),
               controller: _textController,
-              onSubmitted: (String value) => scanBarCode(value),
+              onSubmitted: (String value) => setState(() {
+                this.scanResult = value;
+              }),
+            ),
+            SizedBox(height: 28,),
+            SizedBox(
+              width: 300.0,
+              child: ElevatedButton.icon(
+                label: Text(
+                  'Press here to continue',
+                ),
+                icon: Icon(Icons.input_outlined),
+                style: ElevatedButton.styleFrom(
+                  primary: kPrimaryColor,
+                  onPrimary: Colors.black,
+                  textStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14
+                  )
+                ),
+                onPressed: scanBarCode
+              ),
             )
           ],
         ),
@@ -53,21 +83,26 @@ class _BarCodeAdditionalScreen extends State<BarCodeAdditionalScreen> {
     );
   }
 
-  Future scanBarCode(String scanResult) async {
+  Future scanBarCode() async {
 
       if (!mounted) return;
 
-      setState(() => this.scanResult = scanResult);
-
-      _barCodeStorage.setBarCode(scanResult);
-
-      String barCode = await _barCodeStorage.getBarCode();
-
-      if (barCode != '-1') {
+      if (this.scanResult == null) {
         showDialog(
           context: context,
-          builder: (context) => _buildPopupDialog(context),
+          builder: (context) => _buildAlarm(context),
         );
+      } else {
+        _barCodeStorage.setBarCode(this.scanResult.toString());
+
+        String barCode = await _barCodeStorage.getBarCode();
+
+        if (barCode != '-1') {
+          showDialog(
+            context: context,
+            builder: (context) => _buildPopupDialog(context),
+          );
+        }
       }
   }
 
@@ -89,6 +124,16 @@ class _BarCodeAdditionalScreen extends State<BarCodeAdditionalScreen> {
           child: const Text('OK'),
         )
       ],
+    );
+  }
+
+  Widget _buildAlarm(BuildContext context) {
+    return new AlertDialog(
+      title: const Text('You have not entered your tax code!'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
     );
   }
 }

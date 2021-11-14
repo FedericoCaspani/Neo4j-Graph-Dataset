@@ -26,6 +26,7 @@ class _ContactsState extends State<Contacts> {
       appBar: AppBar(
         title: Text("Contacts"),
         backgroundColor: kPrimaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: ListView.separated(
         itemCount: items.length,

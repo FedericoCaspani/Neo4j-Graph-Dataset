@@ -1,5 +1,4 @@
 import 'package:covid_free_app/Payload/DataManagement/BarCodeStore.dart';
-import 'package:covid_free_app/Screens/MaynLayout.dart';
 import 'package:covid_free_app/Screens/Registration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    //style: fontButton,
     return Scaffold(
       backgroundColor: kPrimaryLightColor,
       body: Container(
@@ -38,44 +38,48 @@ class _BarCodeScreenState extends State<BarCodeScreen> {
               ),
             ),
             SizedBox(height: 20.0),
-            ElevatedButton.icon(
+            SizedBox(
+              width: 300.0,
+              child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor,
+                      onPrimary: Colors.black,
+                      textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14
+                      )
+                  ),
+                  onPressed: scanBarCode,
+                  icon: Icon(Icons.settings_overscan_outlined),
+                  label: Text(
+                    'Press here to start scan your tax code!',
+                  )
+              ),
+            ),
+            SizedBox(height: 20.0),
+            SizedBox(
+              width: 300.0,
+              child: ElevatedButton.icon(
+                label: Text(
+                  'Press here, if you can\'t scan tax code!',
+                ),
+                icon: Icon(Icons.input_outlined),
                 style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
                     onPrimary: Colors.black,
                     textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22
+                        color: Colors.black,
+                        fontSize: 14
                     )
                 ),
-                onPressed: scanBarCode,
-                icon: Icon(Icons.settings_overscan_outlined),
-                label: Text(
-                    'Press here to start scan your tax code!',
-                    style: fontButton,
-                )
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BarCodeAdditionalScreen())
+                  );
+                },
+              )
             ),
-            SizedBox(height: 20.0),
-            ElevatedButton.icon(
-              label: Text(
-                  'Press here, if you cannot scan your tax code',
-                  style: fontButton,
-              ),
-              icon: Icon(Icons.input_outlined),
-              style: ElevatedButton.styleFrom(
-                  primary: kPrimaryColor,
-                  onPrimary: Colors.black,
-                  textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22
-                  )
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BarCodeAdditionalScreen())
-                );
-              },
-            )
           ],
         ),
       ),

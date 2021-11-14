@@ -19,7 +19,7 @@ class BarCodeStorage {
   Future setBarCode(String barCode) async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (prefs.getString('barCodeCovidFree') == null) {
+    if (prefs.getString('barCodeCovidFree') == null || prefs.getString('barCodeCovidFree') == '-1') {
       prefs.setString('barCodeCovidFree', barCode);
     }
   }

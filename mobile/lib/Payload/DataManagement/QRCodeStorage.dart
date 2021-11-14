@@ -12,7 +12,7 @@ class QRCodeStorage {
   Future setQRCode(String barCode) async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (prefs.getString('qrCodeCovidFree') == null) {
+    if (prefs.getString('qrCodeCovidFree') == null && prefs.getString('qrCodeCovidFree') == '-1') {
       prefs.setString('qrCodeCovidFree', barCode);
     }
   }

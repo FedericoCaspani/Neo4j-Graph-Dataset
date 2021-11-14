@@ -52,7 +52,6 @@ class _MainLayoutState extends State<MainLayout> {
           MainGreen()
         ],
       ),
-      /*body: _children[_currentIndex],*/
       bottomNavigationBar: BottomNavigationBar(
         elevation: 15,
         onTap: (index) {

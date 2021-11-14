@@ -13,10 +13,11 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
 
-  final TextEditingController _textEditingController = new TextEditingController();
+  final TextEditingController _textEditingControllerOne = new TextEditingController();
+  final TextEditingController _textEditingControllerSec = new TextEditingController();
   final BarCodeStorage _barCodeStorage = new BarCodeStorage();
   String namePerson = '';
-  String birthDate = '';
+  String surName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,75 +28,89 @@ class _RegistrationState extends State<Registration> {
       body: Container(
         width: size.width,
         height: size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Please enter your name'
-            ),
-            SizedBox(height: 28,),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Name'
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 100,
               ),
-              controller: _textEditingController,
-              onSubmitted: (String value) => {
-                namePerson = value
-              },
-            ),
-            SizedBox(height: 12,),
-            //TODO: if I had time redo it into something fancy (like calendar choose)
-            Text(
-                'Please enter your birthdate'
-            ),
-            SizedBox(height: 28,),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Birthdate'
+              ClipOval(
+                child: Image.network(
+                  logoBarCode,
+                  height: 200.0,
+                  width: 200.0,
+                  fit: BoxFit.cover,
+                ),
               ),
-              controller: _textEditingController,
-              onSubmitted: (String value) => {
-                birthDate = value
-              },
-            ),
-            SizedBox(height: 12,),
-            Text(
-                'Please enter your surname'
-            ),
-            SizedBox(height: 28,),
-            TextField(
+              SizedBox(height: 20.0),
+              Text(
+                'Please enter your name'
+              ),
+              SizedBox(height: 28,),
+              TextField(
                 obscureText: true,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Surname'
+                  border: OutlineInputBorder(),
+                  labelText: 'Name'
                 ),
-                controller: _textEditingController,
-              onSubmitted: (String value) => saveModel(value),
+                controller: _textEditingControllerOne,
+                onSubmitted: (String value) => setState(() {
+                  this.namePerson = value;
+                })
+              ),
+              SizedBox(height: 12,),
+              Text('Please enter your surname'),
+              SizedBox(height: 28,),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Surname'
+                ),
+                controller: _textEditingControllerSec,
+                onSubmitted: (String value) => setState(() {
+                  this.surName = value;
+                })
             ),
-          ],
+            SizedBox(height: 28,),
+            SizedBox(
+              width: 300.0,
+              child: ElevatedButton.icon(
+                  label: Text(
+                    'Press here to continue',
+                  ),
+                  icon: Icon(Icons.input_outlined),
+                  style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor,
+                      onPrimary: Colors.black,
+                      textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14
+                      )
+                  ),
+                  onPressed: saveModel
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Future saveModel(String surname) async {
+  Future saveModel() async {
 
     if (namePerson == '') {
       showDialog(
         context: context,
         builder: (context) => _buildAlert(context)
       );
-    } else if (surname == '') {
-      showDialog(context: context, builder: (context) => _buildAlert(context));
-    } else if (birthDate == '') {
+    } else if (surName == '') {
       showDialog(context: context, builder: (context) => _buildAlert(context));
     } else {
       // TODO: send information to Neo4j
-      Person(namePerson, surname, await _barCodeStorage.getBarCode(), birthDate);
+      Person(namePerson, surName, await _barCodeStorage.getBarCode());
       showDialog(context: context, builder: (context) => _goToMain(context));
     }
   }
@@ -120,9 +135,9 @@ class _RegistrationState extends State<Registration> {
       actions: <Widget>[
         new TextButton(
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacementNamed(
                 context,
-                MaterialPageRoute(builder: (context) => MainLayout())
+                '/menu'
             );
           },
           child: const Text('OK'),

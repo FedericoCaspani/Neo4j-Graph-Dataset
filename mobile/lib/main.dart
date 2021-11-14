@@ -1,3 +1,4 @@
+import 'package:covid_free_app/Screens/MaynLayout.dart';
 import 'package:covid_free_app/Screens/StartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +19,11 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white
       ),
-      home: StartScreen()
+      home: StartScreen(),
+      routes: {
+        "/menu": (_) => new MainLayout(),
+        "/start": (_) => new StartScreen(),
+      }
     );
   }
 }
