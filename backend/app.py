@@ -133,7 +133,7 @@ class PlaceQuarPeop(Resource):
         db = get_db()
         result = db.read_transaction(get_place_quar, place_name)
 
-        return [serialize_person(record['person']) for record in result]
+        return {"persons": [serialize_person(record['person']) for record in result]}
 
 
 # Q2
@@ -199,11 +199,18 @@ class InfectedHealed(Resource):
         db = get_db()
         result = db.read_transaction(get_healed)
 
-        return {
-            'infected': result[0][0],
-            'healthy': result[0][1],
-            'ratio': result[0][2]
-        }
+        if result != []:
+            return {
+                'infected': result[0][0],
+                'healthy': result[0][1],
+                'ratio': result[0][2]
+            }
+        else:
+            return {
+                'infected': 0,
+                'healthy': 0,
+                'ratio': 0
+            }
 
 
 # Q5
@@ -221,11 +228,18 @@ class GetDailyStamp(Resource):
             '''))
         db = get_db()
         result = db.read_transaction(get_daily_stamp)
-        return {
-            'infected': result[0][0],
-            'tested': result[0][1],
-            'ratio': result[0][2]
-        }
+        if result != []:
+            return {
+                'infected': result[0][0],
+                'tested': result[0][1],
+                'ratio': result[0][2]
+            }
+        else:
+            return {
+                'infected': 0,
+                'tested': 0,
+                'ratio': 0
+            }
 
 
 # Q6

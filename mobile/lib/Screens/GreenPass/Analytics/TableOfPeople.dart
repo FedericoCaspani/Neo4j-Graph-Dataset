@@ -30,10 +30,10 @@ class _TableState extends State<TableOfPeople> {
           children: [
             SizedBox(height: 20,),
             TextField(
-              obscureText: true,
+              obscureText: false,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Tax code'
+                  labelText: 'Place name'
               ),
               controller: _textController,
               onSubmitted: (String value) => apiCall(value),

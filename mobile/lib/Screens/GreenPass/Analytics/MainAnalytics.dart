@@ -26,9 +26,8 @@ class _MainAnalyticsState extends State<MainAnalytics> {
 
   List<VaccineCount> vaccineRatioList = <VaccineCount>[];
   List<MostVisitedTimeSeries> mostVisitedTimesSeries = <MostVisitedTimeSeries>[];
-  late DailyStampModel dailyStampsInstance;
-  late InfectedHealedModel infectedHealedInstance;
-
+  List<DailyStampModel> dailyStampsInstance = <DailyStampModel>[];
+  List<InfectedHealedModel> infectedHealedInstance = <InfectedHealedModel>[];
 
   @override
   void initState() {
@@ -65,7 +64,7 @@ class _MainAnalyticsState extends State<MainAnalytics> {
       double ratio = result.ratio;
       int infected = result.infected;
       setState(() {
-        infectedHealedInstance = InfectedHealedModel(infected: infected, healthy: healthy, ratio: ratio);
+        infectedHealedInstance.add(InfectedHealedModel(infected: infected, healthy: healthy, ratio: ratio));
       });
     });
     dailyStamp.placeDailyStamp().then((result) {
@@ -73,7 +72,7 @@ class _MainAnalyticsState extends State<MainAnalytics> {
       int tested = result.tested;
       double ratio = result.ratio;
       setState(() {
-        dailyStampsInstance = DailyStampModel(infected: infected, tested: tested, ratio: ratio);
+        dailyStampsInstance.add(DailyStampModel(infected: infected, tested: tested, ratio: ratio));
       });
     });
   }
@@ -121,9 +120,9 @@ class _MainAnalyticsState extends State<MainAnalytics> {
               SizedBox(height: 30,),
               MostVisited(mostVisited: mostVisitedTimesSeries,),
               SizedBox(height: 30,),
-              InfectedHealed(infectedHealedModel: infectedHealedInstance),
+              InfectedHealed(infectedHealedModel: infectedHealedInstance[0]),
               SizedBox(height: 30,),
-              DailyStamp(dailyStampModel: dailyStampsInstance),
+              DailyStamp(dailyStampModel: dailyStampsInstance[0]),
               SizedBox(height: 30,),
               Container(
                 child: ElevatedButton(
