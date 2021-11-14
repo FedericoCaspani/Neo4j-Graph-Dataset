@@ -1,9 +1,12 @@
 import 'package:covid_free_app/Payload/DataManagement/QRCodeStorage.dart';
+import 'package:covid_free_app/Payload/Models/GreenPass.dart';
+import 'package:covid_free_app/Payload/Models/Infected.dart';
 import 'package:covid_free_app/constraints.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:http/http.dart' as http;
 
 
 class GreenPass extends StatefulWidget {
@@ -14,7 +17,7 @@ class GreenPass extends StatefulWidget {
 class _GreenPassState extends State<GreenPass> {
 
   final QRCodeStorage _qrCodeStorage = new QRCodeStorage();
-  String? scanResult;
+  var scanResult;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,37 @@ class _GreenPassState extends State<GreenPass> {
 
       setState(() => this.scanResult = scanResult);
 
-      _qrCodeStorage.setQRCode(scanResult);
+      if (scanResult.contains('dateStart')) {
+        GreenPassModel greenPass = GreenPassModel.fromJson(scanResult);
+        _qrCodeStorage.setQRCode(greenPass);
+        try {
+          String request = backend + '/SetGreen';
+          var response = await http.post(Uri.parse(request), headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'});
+
+          if (response.statusCode == 201) {
+            print('Luck!');
+          }
+        } catch (e) {
+          print(e);
+        }
+      } else {
+        InfectedModel infectedModel = InfectedModel.fromJson(scanResult);
+        _qrCodeStorage.setQRCode(infectedModel);
+        try {
+          String request = backend + '/SetPositive';
+          var response = await http.post(Uri.parse(request), headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'});
+
+          if (response.statusCode == 201) {
+            print('Luck!');
+          }
+
+        } catch (e) {
+
+        }
+      }
+
 
       String barCode = await _qrCodeStorage.getQRCode();
 

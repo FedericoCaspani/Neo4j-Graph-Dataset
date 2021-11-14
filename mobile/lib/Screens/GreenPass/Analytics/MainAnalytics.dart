@@ -1,12 +1,19 @@
 import 'package:covid_free_app/Payload/Models/ColorVaccines.dart';
+import 'package:covid_free_app/Payload/Models/DailyStamp.dart';
+import 'package:covid_free_app/Payload/Models/InfectedHealed.dart';
 import 'package:covid_free_app/Payload/Models/MostVisited.dart';
 import 'package:covid_free_app/Payload/Models/VaccineCount.dart';
+import 'package:covid_free_app/Screens/GreenPass/Analytics/DailyStamp.dart';
+import 'package:covid_free_app/Screens/GreenPass/Analytics/InfectedHealed.dart';
 import 'package:covid_free_app/Screens/GreenPass/Analytics/MostVisited.dart';
+import 'package:covid_free_app/Screens/GreenPass/Analytics/TableOfPeople.dart';
 import 'package:covid_free_app/Screens/GreenPass/Analytics/VaccineRatio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Payload/API/Maps/Serializable/Q3.dart' as vaccineRatio;
 import '../../../Payload/API/Maps/Serializable/Q6.dart' as mostVisited;
+import '../../../Payload/API/Maps/Serializable/Q4.dart' as infectedHealed;
+import '../../../Payload/API/Maps/Serializable/Q5.dart' as dailyStamp;
 import '../../../constraints.dart';
 
 
@@ -19,6 +26,9 @@ class _MainAnalyticsState extends State<MainAnalytics> {
 
   List<VaccineCount> vaccineRatioList = <VaccineCount>[];
   List<MostVisitedTimeSeries> mostVisitedTimesSeries = <MostVisitedTimeSeries>[];
+  late DailyStampModel dailyStampsInstance;
+  late InfectedHealedModel infectedHealedInstance;
+
 
   @override
   void initState() {
@@ -48,6 +58,22 @@ class _MainAnalyticsState extends State<MainAnalytics> {
           place: placeName));
       setState(() {
         mostVisitedTimesSeries = mostVisited;
+      });
+    });
+    infectedHealed.placeInfectedHealed().then((result) {
+      int healthy = result.healthy;
+      double ratio = result.ratio;
+      int infected = result.infected;
+      setState(() {
+        infectedHealedInstance = InfectedHealedModel(infected: infected, healthy: healthy, ratio: ratio);
+      });
+    });
+    dailyStamp.placeDailyStamp().then((result) {
+      int infected = result.infected;
+      int tested = result.tested;
+      double ratio = result.ratio;
+      setState(() {
+        dailyStampsInstance = DailyStampModel(infected: infected, tested: tested, ratio: ratio);
       });
     });
   }
@@ -93,7 +119,32 @@ class _MainAnalyticsState extends State<MainAnalytics> {
               SizedBox(height: 30,),
               VaccineRatio(vaccineRatio: vaccineRatioList,),
               SizedBox(height: 30,),
-              MostVisited(mostVisited: mostVisitedTimesSeries,)
+              MostVisited(mostVisited: mostVisitedTimesSeries,),
+              SizedBox(height: 30,),
+              InfectedHealed(infectedHealedModel: infectedHealedInstance),
+              SizedBox(height: 30,),
+              DailyStamp(dailyStampModel: dailyStampsInstance),
+              SizedBox(height: 30,),
+              Container(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=> TableOfPeople()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(15.0),
+                      primary: kPrimaryColor,
+                      onPrimary: kPrimaryLightColor
+                  ),
+                  child: Icon(
+                    Icons.table_view_outlined,
+                    size: 35.0,
+                  ),
+                ),
+              )
             ],
           ),
         ),

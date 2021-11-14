@@ -1,3 +1,4 @@
+import 'package:covid_free_app/Payload/Models/QRModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QRCodeStorage {
@@ -9,11 +10,11 @@ class QRCodeStorage {
     return prefs.getString('qrCodeCovidFree') ?? '-1';
   }
 
-  Future setQRCode(String barCode) async {
+  Future setQRCode(QRModel barCode) async {
     final prefs = await SharedPreferences.getInstance();
 
     if (prefs.getString('qrCodeCovidFree') == null && prefs.getString('qrCodeCovidFree') == '-1') {
-      prefs.setString('qrCodeCovidFree', barCode);
+      prefs.setString('qrCodeCovidFree', barCode.toString());
     }
   }
 
