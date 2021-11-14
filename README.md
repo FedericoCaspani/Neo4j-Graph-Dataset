@@ -6,6 +6,6 @@ The main purpose of this project is to provide an overview of what we have done 
 
 Under the folder:
 - /backend/ - you can find the Flask project and its description with "how to run" specification
-- /mobile/ - the mobile application written on Dart using Flutter Framework
+- /mobile/ - the mobile application written on Dart using Flutter Framework and its description
 - /deliviries/ - the documentation
 
