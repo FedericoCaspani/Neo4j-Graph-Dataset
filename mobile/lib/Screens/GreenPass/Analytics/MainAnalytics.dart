@@ -1,9 +1,12 @@
 import 'package:covid_free_app/Payload/Models/ColorVaccines.dart';
+import 'package:covid_free_app/Payload/Models/MostVisited.dart';
 import 'package:covid_free_app/Payload/Models/VaccineCount.dart';
+import 'package:covid_free_app/Screens/GreenPass/Analytics/MostVisited.dart';
 import 'package:covid_free_app/Screens/GreenPass/Analytics/VaccineRatio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Payload/API/Maps/Serializable/Q3.dart' as vaccineRatio;
+import '../../../Payload/API/Maps/Serializable/Q6.dart' as mostVisited;
 import '../../../constraints.dart';
 
 
@@ -15,6 +18,7 @@ class MainAnalytics extends StatefulWidget {
 class _MainAnalyticsState extends State<MainAnalytics> {
 
   List<VaccineCount> vaccineRatioList = <VaccineCount>[];
+  List<MostVisitedTimeSeries> mostVisitedTimesSeries = <MostVisitedTimeSeries>[];
 
   @override
   void initState() {
@@ -33,6 +37,14 @@ class _MainAnalyticsState extends State<MainAnalytics> {
       setState(() {
         vaccineRatioList = vaccineList;
       });
+    });
+    mostVisited.mostVisited().then((result) {
+      double count = result.count.toDouble();
+      String placeName = result.placeName;
+      DateTime dateTime = DateTime.parse(result.date);
+      mostVisitedTimesSeries.add(MostVisitedTimeSeries(count: count,
+          time: dateTime,
+          place: placeName));
     });
   }
 
@@ -76,6 +88,8 @@ class _MainAnalyticsState extends State<MainAnalytics> {
               ),
               SizedBox(height: 30,),
               VaccineRatio(vaccineRatio: vaccineRatioList,),
+              SizedBox(height: 30,),
+              MostVisited(mostVisited: mostVisitedTimesSeries,)
             ],
           ),
         ),

@@ -1,5 +1,4 @@
 import 'package:covid_free_app/Payload/Models/VaccineCount.dart';
-import 'package:covid_free_app/constraints.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
