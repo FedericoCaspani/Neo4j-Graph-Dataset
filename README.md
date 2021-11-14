@@ -1,6 +1,6 @@
 # unstructured Data Topic 1
 
-This is the student project done by Sergei Nabatov, Matteo Citterio, Federico Caspani, Nikita Rozov & Oleksandr Schukchlyi
+This is the student project done by Sergei Nabatov, Nikita Rozov, Matteo Citterio, Federico Caspani, Oleksandr Schukchlyi
 
 The main purpose of this project is to provide an overview of what we have done for the first part of the project in the course "Systems and Methods for Big and Unstructured data" in Politecnico di Milano.
 
