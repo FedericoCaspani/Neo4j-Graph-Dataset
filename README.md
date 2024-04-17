@@ -1,4 +1,4 @@
-# unstructured Data Topic 1
+# Neo4j Graph Dataset
 
 This is the student project done by Sergei Nabatov, Nikita Rozov, Matteo Citterio, Federico Caspani, Oleksandr Schukchlyi
 
